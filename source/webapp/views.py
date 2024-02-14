@@ -18,3 +18,16 @@ def new(request):
             deadline=request.POST.get('deadline')
         )
         return HttpResponseRedirect('/')
+
+
+def view(request):
+    task_id = request.GET.get('id')
+    task = Task.objects.get(id=task_id)
+    return render(request, 'view.html', {'task': task})
+
+
+def delete(request):
+    task_id = request.GET.get('id')
+    task = Task.objects.get(id=task_id)
+    task.delete()
+    return HttpResponseRedirect('/')
