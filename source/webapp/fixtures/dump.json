@@ -1,0 +1,53 @@
+[
+{
+  "model": "webapp.task",
+  "pk": 1,
+  "fields": {
+    "description": "╥хёЄютр  чрфрўр",
+    "status": "new",
+    "deadline": "2024-03-03",
+    "created_at": "2024-02-14T11:27:44.264Z",
+    "updated_at": "2024-02-14T11:27:44.264Z"
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 2,
+  "fields": {
+    "description": "test",
+    "status": null,
+    "deadline": "2024-03-03",
+    "created_at": "2024-02-14T11:46:07.827Z",
+    "updated_at": "2024-02-14T11:46:07.827Z"
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 3,
+  "fields": {
+    "description": "ЄхёЄ",
+    "status": null,
+    "deadline": "2024-03-03",
+    "created_at": "2024-02-14T11:46:21.924Z",
+    "updated_at": "2024-02-14T11:46:21.924Z"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$15mjisd6U7YHozxdD6QJPS$gIqpYNParGLbziPKeLqRMKwn0Ojp9Z3jimtCd5fu0Js=",
+    "last_login": "2024-02-14T10:36:28.063Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2024-02-14T10:34:08.169Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
