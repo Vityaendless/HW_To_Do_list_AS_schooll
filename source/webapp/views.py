@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import  HttpResponseRedirect
 from .models import Task, status_choices
 
@@ -14,20 +14,19 @@ def new(request):
     elif request.method == 'POST':
         Task.objects.create(
             description=request.POST.get('description'),
+            full_description=request.POST.get('full_description'),
             status=request.POST.get('status'),
             deadline=request.POST.get('deadline')
         )
         return HttpResponseRedirect('/')
 
 
-def view(request):
-    task_id = request.GET.get('id')
-    task = Task.objects.get(id=task_id)
+def view(request, *args, pk):
+    task = get_object_or_404(Task, pk=pk)
     return render(request, 'view.html', {'task': task})
 
 
-def delete(request):
-    task_id = request.GET.get('id')
-    task = Task.objects.get(id=task_id)
+def delete(request, *args, pk):
+    task = get_object_or_404(Task, pk=pk)
     task.delete()
     return HttpResponseRedirect('/')
