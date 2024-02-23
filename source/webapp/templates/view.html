@@ -8,7 +8,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ task.description }}</h5>
         <h6 class="card-subtitle mb-2 text-body-secondary">{{ task.full_description|linebreaks }}</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary bg-danger">{{ task.status }}</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary bg-danger">{{ task.get_status_display }}</h6>
         <p class="card-text">{{ task.deadline }}</p>
         <br><a href="{% url 'delete' pk=task.pk %}" class="btn btn-danger">Delete</a></li>
       </div>
