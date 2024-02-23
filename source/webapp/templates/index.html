@@ -7,8 +7,12 @@
   <ul class="list-group">
     {% for task in tasks %}
       <li class="list-group-item">{{ task.description }} - {{task.deadline}} - <a href="#" class="link-underline-primary">{{ task.get_status_display }}</a>
-        <br><a href="{% url 'view' pk=task.pk %}" class="btn btn-primary">Details</a>
-        <br><a href="{% url 'delete' pk=task.pk %}" class="btn btn-danger">Delete</a></li>
+        <div class="d-flex mt-1">
+          <a href="{% url 'view' pk=task.pk %}" class="btn btn-primary me-1">Details</a>
+          <a href="{% url 'update' pk=task.pk %}" class="btn btn-dark me-1">Update</a>
+          <a href="{% url 'delete' pk=task.pk %}" class="btn btn-danger">Delete</a>
+        </div>
+      </li>
     {% endfor %}
   </ul>
 {% endblock %}
