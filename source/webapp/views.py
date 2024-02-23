@@ -61,3 +61,14 @@ def delete(request, *args, pk):
     elif request.method == "POST":
         task.delete()
         return redirect('index')
+
+
+def mass_delete(request):
+    if request.method == "POST":
+        if request.POST.getlist('mass_delete'):
+            data = request.POST.getlist('mass_delete')
+            print(data)
+            for pk in data:
+                task = get_object_or_404(Task, pk=pk)
+                task.delete()
+    return redirect('index')
