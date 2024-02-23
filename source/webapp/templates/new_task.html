@@ -4,29 +4,7 @@
 {% block title %}Add new task{% endblock %}
 {% block content %}
     <h1>New task</h1>
-    <form action="{% url 'index' %}" method="POST">
-      {% csrf_token %}
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" id="description" name="description" aria-describedby="descHelp">
-        <div id="descHelp" class="form-text">Fill in task description</div>
-      </div>
-      <div class="mb-3">
-        <label for="full_description">Full Description</label>
-        <textarea class="form-control" placeholder="Leave a comment here" name="full_description" id="full_description"></textarea>
-      </div>
-      <div class="mb-3">
-        <select class="form-select" name="status"  aria-label="Status">
-          {% for status in statuses %}
-            <option value="{{ status.0 }}">{{ status.1 }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="deadline" class="form-label">Deadline</label>
-        <input type="text" class="form-control" id="deadline" name="deadline" aria-describedby="deadlineHelp">
-        <div id="deadlineHelp" class="form-text">Enter data in format YYYY-MM-DD</div>
-      </div>
-      <button type="submit" class="btn btn-primary">Send</button>
+    <form action="{% url 'new_task' %}" method="POST">
+      {% include 'partial/task_form.html' with value_submit='Create task' %}
     </form>
 {% endblock %}
