@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block title %}Task {{ task.id }} details{% endblock %}
+{% block menu %}
+    <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Tasks list</a>
+    <a class="nav-link" href="{% url 'new_task' %}">New task</a>
+    <a class="nav-link bg-danger" href="{% url 'delete' pk=task.pk %}">Delete task</a>
+{% endblock %}
 {% block content %}
     <h1>Task {{ task.id }} details</h1>
     <div class="card">
@@ -10,7 +15,6 @@
         <h6 class="card-subtitle mb-2 text-body-secondary">{{ task.full_description|linebreaks }}</h6>
         <h6 class="card-subtitle mb-2 text-body-secondary bg-danger">{{ task.get_status_display }}</h6>
         <p class="card-text">{{ task.deadline }}</p>
-        <br><a href="{% url 'delete' pk=task.pk %}" class="btn btn-danger">Delete</a></li>
       </div>
     </div>
 {% endblock %}
