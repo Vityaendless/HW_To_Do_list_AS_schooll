@@ -4,7 +4,7 @@
 {% block title %}Task {{ task.id }} details{% endblock %}
 {% block menu %}
     <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Tasks list</a>
-    <a class="nav-link" href="#">New task</a>
+    <a class="nav-link" href="{% url 'new_task' %}">New task</a>
     <a class="nav-link" href="#">Update task</a>
     <a class="nav-link bg-danger" href="#">Delete task</a>
 {% endblock %}

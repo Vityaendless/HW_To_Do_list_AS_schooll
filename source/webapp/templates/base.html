@@ -18,7 +18,7 @@
           <div class="navbar-nav">
             {% block menu %}
               <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Tasks list</a>
-              <a class="nav-link" href="#">New task</a>
+              <a class="nav-link" href="{% url 'new_task' %}">New task</a>
             {% endblock %}
           </div>
         </div>
