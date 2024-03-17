@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+  <h1>List of tasks</h1>
+  <ul class="list-group">
+    {% for task in tasks %}
+      <li class="list-group-item">
+        <p><b>{{ task.summary }}</b></p>
+        <p>{{ task.description }}</p>
+        <p class="bg-danger">Status:{{ task.status }}</p>
+        <p class="bg-primary">Tag:{{ task.type }}</p>
+        <div class="d-flex mt-1">
+          <a href="{% url 'task_view' pk=task.pk %}" class="btn btn-primary me-1">Details</a>
+          <a href="#" class="btn btn-dark me-1">Update</a>
+          <a href="#" class="btn btn-danger">Delete</a>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
