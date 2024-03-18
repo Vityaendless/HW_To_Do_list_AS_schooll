@@ -14,7 +14,7 @@
         <div class="d-flex mt-1">
           <a href="{% url 'task_view' pk=task.pk %}" class="btn btn-primary me-1">Details</a>
           <a href="{% url 'update_task' pk=task.pk %}" class="btn btn-dark me-1">Update</a>
-          <a href="#" class="btn btn-danger">Delete</a>
+          <a href="{% url 'delete_task' pk=task.pk %}" class="btn btn-danger">Delete</a>
         </div>
       </li>
     {% endfor %}

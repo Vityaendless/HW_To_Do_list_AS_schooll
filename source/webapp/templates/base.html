@@ -17,8 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             {% block menu %}
-              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Tasks list</a>
-              <a class="nav-link" href="{% url 'new_task' %}">New task</a>
+              {% include 'partial/base_menu.html' %}
             {% endblock %}
           </div>
         </div>

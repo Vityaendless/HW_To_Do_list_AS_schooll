@@ -64,3 +64,14 @@ class TaskUpdateView(TemplateView):
             return redirect('task_view', pk=task.pk)
         else:
             return render(request, 'update_task.html', {'form': form})
+
+
+class TaskDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        task = get_object_or_404(Task, pk=kwargs.get('pk'))
+        return render(request, 'delete_task.html', {'task': task})
+
+    def post(self, request, *args, **kwargs):
+        task = get_object_or_404(Task, pk=kwargs.get('pk'))
+        task.delete()
+        return redirect('index')
