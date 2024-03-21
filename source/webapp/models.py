@@ -12,7 +12,8 @@ class AbstractModel(models.Model):
 class Task(AbstractModel):
     summary = models.CharField(max_length=50, verbose_name="Заголовок")
     description = models.TextField(max_length=3000, null=False, blank=False, verbose_name="Описание")
-    type = models.ForeignKey('webapp.Type', related_name='tasks', on_delete=models.PROTECT, verbose_name='Тип')
+    #type_old = models.ForeignKey('webapp.Type', related_name='tasks_old', on_delete=models.PROTECT, verbose_name='Тип')
+    types = models.ManyToManyField('webapp.Type', related_name='tasks', blank=True, verbose_name='Типы')
     status = models.ForeignKey('webapp.Status', related_name='tasks', on_delete=models.PROTECT, verbose_name='Статус')
 
     def __str__(self):
