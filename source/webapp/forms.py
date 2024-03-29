@@ -1,18 +1,32 @@
 from django import forms
-from django.forms import widgets
-from .models import Type, Status
+from .models import Task
 from django.core.exceptions import ValidationError
 
 
-class TaskForm(forms.Form):
-    summary = forms.CharField(min_length=10 ,max_length=50, label='Summary')
-    description = forms.CharField(max_length=3000, required=False, label='Description', widget=widgets.Textarea)
-    #type = forms.ModelChoiceField(queryset=Type.objects.all(), label='Type')
-    types = forms.ModelMultipleChoiceField(queryset=Type.objects.all(), label='Types', widget=forms.CheckboxSelectMultiple)
-    status = forms.ModelChoiceField(queryset=Status.objects.all(), label='Status')
+class TaskForm(forms.ModelForm):
+
+    class Meta:
+        model = Task
+        fields = ('summary', 'description', 'types', 'status')
+        widgets = {'types': forms.SelectMultiple}
+        error_messages = {
+            'summary': {
+                'required': 'Please enter summary',
+                'min_length': 'Please write 10 symbols or more'
+            }
+        }
+
 
     # def clean_summary(self):
     #     summary = self.cleaned_data.get('summary')
     #     if summary ...:
     #         raise ValidationError('There is a category with that name')
     #     return summary
+
+    def clean(self):
+        cleaned_data = super().clean()
+        summary = cleaned_data.get('summary')
+        description = cleaned_data.get('description')
+        if summary == description:
+            raise ValidationError('There are not equals summary and desc')
+        return cleaned_data
