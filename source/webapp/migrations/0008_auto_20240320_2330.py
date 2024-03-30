@@ -6,12 +6,14 @@ from django.db import migrations
 def transfer_types(apps, schema_editor):
     Task = apps.get_model('webapp.Task')
     for task in Task.objects.all():
-        task.types.set([task.type_old])
+        task.types.add(task.type_old)
 
 def rollback_transfer(apps, schema_editor):
     Task = apps.get_model('webapp.Task')
     for task in Task.objects.all():
-        task.type_old.set(task.types.all())
+        task.type = task.types.first()
+        task.save()
+        #task.type_old.set(task.types.all())
 
 
 class Migration(migrations.Migration):

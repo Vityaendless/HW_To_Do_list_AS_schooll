@@ -43,6 +43,35 @@ class TaskCreateView(View):
 
 
 class TaskUpdateView(TemplateView):
+    #for View class
+    # def dispatch(self, request, *args, **kwargs):
+    #     self.task = get_object_or_404(Task, pk=self.kwargs.get('pk'))
+    #     return super().dispatch(request, *args, **kwargs)
+    #
+    # def get(self, request, *args, **kwargs):
+    #     form = TaskForm(initial={
+    #         'summary': self.task.summary,
+    #         'description': self.task.description,
+    #         'status': self.task.status
+    #         'types': self.types.all()
+    #     })
+    #     return render(request, 'task_view.html', {'form': form})
+    #
+    # def post(self, request, *args, **kwargs):
+    #     form = TaskForm(data=request.POST)
+    #     if form.is_valid():
+    #         types = form.cleaned_data.pop('types')
+    #         self.task.summary=form.cleaned_data.get('summary')
+    #         self.task.description=form.cleaned_data.get('description')
+    #         #task.types=form.cleaned_data.get('types')
+    #         self.task.status = form.cleaned_data.get('status')
+    #         self.task.types.set(types)
+    #         self.task.save()
+    #         return redirect('task_view', pk=self.task.pk)
+    #     else:
+    #         return render(request, 'update_task.html', {'form': form})
+
+
     def get(self, request, *args, **kwargs):
         task = get_object_or_404(Task, pk=kwargs.get('pk'))
         form = TaskForm(initial={
