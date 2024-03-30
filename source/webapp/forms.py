@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 
 
 class TaskForm(forms.Form):
-    summary = forms.CharField(min_length=10 ,max_length=50, label='Summary')
+    summary = forms.CharField(min_length=10, max_length=50, label='Summary')
     description = forms.CharField(max_length=3000, required=False, label='Description', widget=widgets.Textarea)
     #type = forms.ModelChoiceField(queryset=Type.objects.all(), label='Type')
     types = forms.ModelMultipleChoiceField(queryset=Type.objects.all(), label='Types', widget=forms.CheckboxSelectMultiple)
