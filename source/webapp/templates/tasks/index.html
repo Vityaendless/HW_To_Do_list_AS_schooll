@@ -6,19 +6,7 @@
   <h1>List of tasks</h1>
   <ul class="list-group">
     {% for task in tasks %}
-      <li class="list-group-item">
-        <p><b>{{ task.summary }}</b></p>
-        <p>{{ task.description }}</p>
-        <p class="bg-danger">Status:{{ task.status }}</p>
-        <p class="bg-primary">Tag:{% for type in task.types.all %}
-          {{ type.title }} {% if forloop.last %}.{% else %},{% endif %}
-          {% endfor %}</p>
-        <div class="d-flex mt-1">
-          <a href="{% url 'task_view' pk=task.pk %}" class="btn btn-primary me-1">Details</a>
-          <a href="{% url 'update_task' pk=task.pk %}" class="btn btn-dark me-1">Update</a>
-          <a href="{% url 'delete_task' pk=task.pk %}" class="btn btn-danger">Delete</a>
-        </div>
-      </li>
+      {% include 'partial/task_item.html' %}
     {% endfor %}
   </ul>
 {% endblock %}

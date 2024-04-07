@@ -1,5 +1,5 @@
 from django import forms
-from .models import Task
+from .models import Task, Project
 from django.core.exceptions import ValidationError
 
 
@@ -7,12 +7,12 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ('summary', 'description', 'types', 'status', 'project')
+        fields = ('summary', 'description', 'types', 'status')
         widgets = {'types': forms.SelectMultiple}
         error_messages = {
             'summary': {
                 'required': 'Please enter summary',
-                'min_length': 'Please write 10 symbols or more'
+                'min_length': 'Please write 5 symbols or more'
             }
         }
 
@@ -30,3 +30,20 @@ class TaskForm(forms.ModelForm):
         if summary == description:
             raise ValidationError('There are not equals summary and desc')
         return cleaned_data
+
+
+class ProjectForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('title', 'description', 'start_date', 'end_date')
+        error_messages = {
+            'title': {
+                'required': 'Please enter title',
+                'min_length': 'Please write 5 symbols or more'
+            }
+        }
+
+
+class SimpleSearchForm(forms.Form):
+    search = forms.CharField(max_length=100, required=False, label='Find')
