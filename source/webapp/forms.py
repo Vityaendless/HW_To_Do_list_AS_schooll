@@ -7,7 +7,7 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ('summary', 'description', 'types', 'status')
+        fields = ('summary', 'description', 'types', 'status', 'project')
         widgets = {'types': forms.SelectMultiple}
         error_messages = {
             'summary': {

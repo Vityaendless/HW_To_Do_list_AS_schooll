@@ -1,14 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import View, TemplateView, FormView
-from .models import Task
-from .forms import TaskForm
+from ..models import Task
+from ..forms import TaskForm
 
 from django.db.models import Q, F
 from datetime import datetime, timedelta
 
 
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    template_name = 'tasks/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,7 +31,7 @@ class IndexView(TemplateView):
 
 
 class TaskView(TemplateView):
-    template_name = 'task_view.html'
+    template_name = 'tasks/task_view.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -40,7 +40,7 @@ class TaskView(TemplateView):
 
 
 class TaskCreateView(FormView):
-    template_name = 'new_task.html'
+    template_name = 'tasks/new_task.html'
     form_class = TaskForm
 
     def get_success_url(self):
@@ -52,7 +52,7 @@ class TaskCreateView(FormView):
 
 
 class TaskUpdateView(FormView):
-    template_name = 'update_task.html'
+    template_name = 'tasks/update_task.html'
     form_class = TaskForm
 
     def dispatch(self, request, *args, **kwargs):
@@ -75,7 +75,7 @@ class TaskUpdateView(FormView):
 class TaskDeleteView(View):
     def get(self, request, *args, **kwargs):
         task = get_object_or_404(Task, pk=kwargs.get('pk'))
-        return render(request, 'delete_task.html', {'task': task})
+        return render(request, 'tasks/delete_task.html', {'task': task})
 
     def post(self, request, *args, **kwargs):
         task = get_object_or_404(Task, pk=kwargs.get('pk'))
