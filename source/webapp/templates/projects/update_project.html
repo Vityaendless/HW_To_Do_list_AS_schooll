@@ -4,5 +4,9 @@
 {% block title %}Update project{% endblock %}
 {% block content %}
     <h1>Update task</h1>
-    {% include 'partial/form.html' with value_submit='Update project' form_method='post' %}
+    {% if not project.is_deleted %}
+        {% include 'partial/form.html' with value_submit='Update project' form_method='post' %}
+    {% else %}
+        <h1>Page not found</h1>
+    {% endif %}
 {% endblock %}
