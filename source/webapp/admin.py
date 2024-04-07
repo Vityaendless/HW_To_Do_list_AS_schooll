@@ -8,7 +8,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_display_links = ['id', 'summary']
     list_filter = ['summary', 'description', 'created_at']
     search_fields = ['summary', 'description']
-    fields = ['summary', 'description', 'types', 'status', 'project', 'created_at', 'updated_at']
+    fields = ['summary', 'description', 'types', 'status', 'project', 'is_deleted', 'created_at', 'updated_at']
     readonly_fields = ['created_at', 'updated_at']
 
 
@@ -34,5 +34,5 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display_links = ['id', 'title']
     list_filter = ['title', 'description', 'created_at']
     search_fields = ['title', 'description', 'start_date', 'end_date']
-    fields = ['title', 'description', 'start_date', 'end_date', 'created_at', 'updated_at']
+    fields = ['title', 'description', 'start_date', 'end_date', 'is_deleted', 'created_at', 'updated_at']
     readonly_fields = ['created_at', 'updated_at']

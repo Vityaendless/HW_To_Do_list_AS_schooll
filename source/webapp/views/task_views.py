@@ -1,5 +1,4 @@
-from django.shortcuts import get_object_or_404, redirect, reverse
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from ..models import Task, Project
 from ..forms import TaskForm
@@ -33,5 +32,8 @@ class TaskDeleteView(DeleteView):
     template_name = 'tasks/delete_task.html'
     model = Task
 
-    def get_success_url(self):
-        return reverse('project', kwargs={'pk': self.object.project.pk})
+    def post(self, request, *args, **kwargs):
+        task = get_object_or_404(Task, pk=kwargs.get('pk'))
+        task.is_deleted = True
+        task.save()
+        return redirect('project', pk=task.project.pk)

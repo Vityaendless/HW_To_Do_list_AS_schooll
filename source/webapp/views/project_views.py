@@ -1,7 +1,8 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.db.models import Q
-from django.urls import reverse_lazy
 from django.utils.http import urlencode
+from django.shortcuts import redirect, get_object_or_404
+from django.http import HttpResponseNotFound
 
 from ..models import Project
 from ..forms import SimpleSearchForm, ProjectForm
@@ -35,6 +36,7 @@ class ProjectsView(ListView):
                 Q(title__icontains=self.search_value) |
                 Q(description__icontains=self.search_value)
             )
+        queryset = queryset.filter(is_deleted=False)
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -52,7 +54,7 @@ class ProjectView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tasks'] = self.object.tasks.all()
+        context['tasks'] = self.object.tasks.filter(is_deleted=False)
         return context
 
 
@@ -71,4 +73,9 @@ class ProjectUpdateView(UpdateView):
 class ProjectDeleteView(DeleteView):
     template_name = 'projects/delete_project.html'
     model = Project
-    success_url = reverse_lazy('index')
+
+    def post(self, request, *args, **kwargs):
+        project = get_object_or_404(Project, pk=kwargs.get('pk'))
+        project.is_deleted = True
+        project.save()
+        return redirect('index')

@@ -4,23 +4,29 @@
 {% block title %}Project {{ project.id }} details{% endblock %}
 {% block menu %}
     {% include 'partial/base_menu.html' %}
-    {% include 'partial/detail_menu_project.html' %}
+    {% if not project.is_deleted %}
+        {% include 'partial/detail_menu_project.html' %}
+    {% endif %}
 {% endblock %}
 {% block content %}
-    <h1>Project {{ project.id }} details</h1>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{ project.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">{{ project.description|linebreaks }}</h6>
-        <p class="card-text">Start date: {{ project.start_date }}</p>
-        <p class="card-text">End date: {{ project.end_date }}</p>
-        {% for task in tasks %}
-        <ul class="list-group">
-            {% include 'partial/task_item.html' %}
-        </ul>
-        {% empty %}
-        <p>No tasks</p>
-        {% endfor %}
-      </div>
-    </div>
+    {% if project.is_deleted %}
+        <h1>Page not found</h1>
+    {% else %}
+        <h1>Project {{ project.id }} details</h1>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ project.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{ project.description|linebreaks }}</h6>
+            <p class="card-text">Start date: {{ project.start_date }}</p>
+            <p class="card-text">End date: {{ project.end_date }}</p>
+            {% for task in tasks %}
+            <ul class="list-group">
+                {% include 'partial/task_item.html' %}
+            </ul>
+            {% empty %}
+            <p>No tasks</p>
+            {% endfor %}
+          </div>
+        </div>
+    {% endif %}
 {% endblock %}
