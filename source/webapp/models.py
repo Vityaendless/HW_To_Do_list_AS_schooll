@@ -16,6 +16,7 @@ class Task(AbstractModel):
     #type_old = models.ForeignKey('webapp.Type', related_name='tasks_old', on_delete=models.PROTECT, verbose_name='Тип')
     types = models.ManyToManyField('webapp.Type', related_name='tasks', verbose_name='Types')
     status = models.ForeignKey('webapp.Status', related_name='tasks', on_delete=models.PROTECT, verbose_name='Status')
+    project = models.ForeignKey('webapp.Project', related_name='projects', on_delete=models.PROTECT, verbose_name='Project')
 
     def __str__(self):
         return f"Task {self.summary}"
@@ -33,3 +34,13 @@ class Status(AbstractModel):
 
     def __str__(self):
         return self.title
+
+
+class Project(AbstractModel):
+    start_date  = models.DateField(verbose_name="Start Date")
+    end_date = models.DateField(verbose_name="End Date", null=True, blank=True)
+    title = models.CharField(max_length=50, validators=[MinLengthValidator(5)], verbose_name="Title")
+    description = models.TextField(max_length=3000, null=True, blank=True, verbose_name="Description")
+
+    def __str__(self):
+        return f"Task {self.title}"
