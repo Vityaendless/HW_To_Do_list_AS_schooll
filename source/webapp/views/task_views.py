@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.views.generic import View, TemplateView, FormView
-from ..models import Task
+from django.views.generic import View, TemplateView, FormView, CreateView
+from ..models import Task, Project
 from ..forms import TaskForm
 
 from django.db.models import Q, F
@@ -41,14 +41,15 @@ class TaskView(TemplateView):
 
 class TaskCreateView(FormView):
     template_name = 'tasks/new_task.html'
+    model = Task
     form_class = TaskForm
 
-    def get_success_url(self):
-        return reverse('task_view', kwargs={'pk': self.task.pk})
-
     def form_valid(self, form):
-        self.task = form.save()
-        return super().form_valid(form)
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+        task = form.save(commit=False)
+        task.project = project
+        task.save()
+        return redirect('project', pk=project.pk)
 
 
 class TaskUpdateView(FormView):

@@ -4,7 +4,5 @@
 {% block title %}Update project{% endblock %}
 {% block content %}
     <h1>Update task</h1>
-    <form action="" method="POST">
-      {% include 'partial/task_form.html' with value_submit='Update project' %}
-    </form>
+    {% include 'partial/form.html' with value_submit='Update project' form_method='post' %}
 {% endblock %}

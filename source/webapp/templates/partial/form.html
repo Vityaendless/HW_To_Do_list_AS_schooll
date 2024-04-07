@@ -1,3 +1,4 @@
+<form action="{{ action_url }}" method="{{ form_method }}">
 {% csrf_token %}
 {% for error in form.non_field_errors %}
     <p class="text-danger">{{ error }}</p>
@@ -11,3 +12,4 @@
 {% endfor %}
 <br/>
 <input class="btn btn-primary" type="submit" value="{{ value_submit }}"/>
+</form>
