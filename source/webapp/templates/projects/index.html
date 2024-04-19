@@ -13,11 +13,11 @@
   <ul class="list-group">
     {% for project in projects %}
       <li class="list-group-item">
-        <p><b><a href="{% url 'project' pk=project.pk %}">{{ project.title }}</a></b></p>
+        <p><b><a href="{% url 'webapp:project' pk=project.pk %}">{{ project.title }}</a></b></p>
         <p>{{ project.description }}</p>
         <div class="d-flex mt-1">
-          <a href="{% url 'update_project' pk=project.pk %}" class="btn btn-dark me-1">Update</a>
-          <a href="{% url 'delete_project' pk=project.pk %}" class="btn btn-danger">Delete</a>
+          <a href="{% url 'webapp:update_project' pk=project.pk %}" class="btn btn-dark me-1">Update</a>
+          <a href="{% url 'webapp:delete_project' pk=project.pk %}" class="btn btn-danger">Delete</a>
         </div>
       </li>
     {% empty %}

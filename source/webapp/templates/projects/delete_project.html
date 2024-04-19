@@ -9,7 +9,7 @@
         {% csrf_token %}
         <input type="submit" value="Yes"/>
     </form>
-    <a href="{% url 'project' pk=project.pk %}">No</a>
+    <a href="{% url 'webapp:project' pk=project.pk %}">No</a>
 {% else %}
     <h1>Page not found</h1>
 {% endif %}

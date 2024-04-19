@@ -78,4 +78,4 @@ class ProjectDeleteView(DeleteView):
         project = get_object_or_404(Project, pk=kwargs.get('pk'))
         project.is_deleted = True
         project.save()
-        return redirect('index')
+        return redirect('webapp:index')

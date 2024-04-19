@@ -4,6 +4,8 @@ from .views import (TaskView, TaskCreateView, TaskUpdateView, TaskDeleteView,
                     ProjectDeleteView)
 
 
+app_name = 'webapp'
+
 urlpatterns = [
     path('', ProjectsView.as_view(), name='index'),
     path('task/<int:pk>/', TaskView.as_view(), name='task_view'),

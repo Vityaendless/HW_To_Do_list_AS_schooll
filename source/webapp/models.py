@@ -24,7 +24,7 @@ class Task(AbstractModel):
         return f"Task {self.summary}"
 
     def get_absolute_url(self):
-        return reverse('task_view', kwargs={'pk': self.pk})
+        return reverse('webapp:task_view', kwargs={'pk': self.pk})
 
 
 class Type(AbstractModel):
@@ -52,4 +52,4 @@ class Project(AbstractModel):
         return f"Task {self.title}"
 
     def get_absolute_url(self):
-        return reverse('project', kwargs={'pk': self.pk})
+        return reverse('webapp:project', kwargs={'pk': self.pk})

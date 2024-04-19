@@ -20,7 +20,7 @@ class TaskCreateView(CreateView):
         task.project = project
         task.save()
         form.save_m2m()
-        return redirect('project', pk=project.pk)
+        return redirect('webapp:project', pk=project.pk)
 
 
 class TaskUpdateView(UpdateView):
@@ -37,4 +37,4 @@ class TaskDeleteView(DeleteView):
         task = get_object_or_404(Task, pk=kwargs.get('pk'))
         task.is_deleted = True
         task.save()
-        return redirect('project', pk=task.project.pk)
+        return redirect('webapp:project', pk=task.project.pk)
