@@ -3,6 +3,7 @@
 {% block title %}Delete Task{% endblock %}
 {% block content %}
 <h1>Delete Task</h1>
+{% if request.user.is_authenticated %}
 {% if not task.is_deleted %}
     <h3>Do you approve removing {{ task.id }} ?</h3>
     <form action="" method="post">
@@ -12,5 +13,8 @@
     <a href="{% url 'webapp:task_view' pk=task.pk %}">No</a>
 {% else %}
     <h1>Page not found</h1>
+{% endif %}
+{% else %}
+    <h1>No access</h1>
 {% endif %}
 {% endblock %}

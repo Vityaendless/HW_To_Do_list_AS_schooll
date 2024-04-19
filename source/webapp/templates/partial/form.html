@@ -1,15 +1,19 @@
-<form action="{{ action_url }}" method="{{ form_method }}">
-{% csrf_token %}
-{% for error in form.non_field_errors %}
-    <p class="text-danger">{{ error }}</p>
-{% endfor %}
-{% for field in form %}
-    <label for="{{ field.id_for_label }}">{{ field.label }}:</label><br/>
-    {{ field }}<br/>
-    {% for error in field.errors %}
-        <p class="tex-danger">{{ error }}</p>
+{% if request.user.is_authenticated %}
+    <form action="{{ action_url }}" method="{{ form_method }}">
+    {% csrf_token %}
+    {% for error in form.non_field_errors %}
+        <p class="text-danger">{{ error }}</p>
     {% endfor %}
-{% endfor %}
-<br/>
-<input class="btn btn-primary" type="submit" value="{{ value_submit }}"/>
-</form>
+    {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}:</label><br/>
+        {{ field }}<br/>
+        {% for error in field.errors %}
+            <p class="tex-danger">{{ error }}</p>
+        {% endfor %}
+    {% endfor %}
+    <br/>
+    <input class="btn btn-primary" type="submit" value="{{ value_submit }}"/>
+    </form>
+{% else %}
+    <h1>No access</h1>
+{% endif %}
