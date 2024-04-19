@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.utils.http import urlencode
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponseNotFound
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ..models import Project
 from ..forms import SimpleSearchForm, ProjectForm
@@ -58,7 +59,7 @@ class ProjectView(DetailView):
         return context
 
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = 'projects/new_project.html'
     model = Project
     form_class = ProjectForm
@@ -70,7 +71,7 @@ class ProjectUpdateView(UpdateView):
     form_class = ProjectForm
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'projects/delete_project.html'
     model = Project
 
