@@ -19,6 +19,10 @@
             <h6 class="card-subtitle mb-2 text-body-secondary">{{ project.description|linebreaks }}</h6>
             <p class="card-text">Start date: {{ project.start_date }}</p>
             <p class="card-text">End date: {{ project.end_date }}</p>
+            <p class="bg-primary">Users:{% for user in project.users.all %}
+                {{ user.username }} {% if forloop.last %}.{% else %},{% endif %}
+                {% endfor %}
+            </p>
             {% for task in tasks %}
             <ul class="list-group">
                 {% include 'partial/task_item.html' %}
