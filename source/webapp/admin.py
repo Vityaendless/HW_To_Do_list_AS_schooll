@@ -32,7 +32,7 @@ class StatusAdmin(admin.ModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'created_at']
     list_display_links = ['id', 'title']
-    list_filter = ['title', 'description', 'created_at']
+    list_filter = ['title', 'users', 'description', 'created_at']
     search_fields = ['title', 'description', 'start_date', 'end_date']
-    fields = ['title', 'description', 'start_date', 'end_date', 'is_deleted', 'created_at', 'updated_at']
+    fields = ['title', 'description', 'users', 'start_date', 'end_date', 'is_deleted', 'created_at', 'updated_at']
     readonly_fields = ['created_at', 'updated_at']

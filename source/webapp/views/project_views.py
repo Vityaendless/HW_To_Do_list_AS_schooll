@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.utils.http import urlencode
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponseNotFound
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from ..models import Project
 from ..forms import SimpleSearchForm, ProjectForm
@@ -59,21 +59,24 @@ class ProjectView(DetailView):
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'projects/new_project.html'
     model = Project
     form_class = ProjectForm
+    permission_required = 'webapp.add_project'
 
 
-class ProjectUpdateView(UpdateView):
+class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'projects/update_project.html'
     model = Project
     form_class = ProjectForm
+    permission_required = 'webapp.change_project'
 
 
-class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'projects/delete_project.html'
     model = Project
+    permission_required = 'webapp.delete_project'
 
     def post(self, request, *args, **kwargs):
         project = get_object_or_404(Project, pk=kwargs.get('pk'))
