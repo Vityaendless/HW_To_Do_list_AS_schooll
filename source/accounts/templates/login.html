@@ -1,14 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Log in</title>
-</head>
-<body>
-<div class="container">
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Log in{% endblock %}
+{% block content %}
     <h1>Log in</h1>
     <form action="{% url 'accounts:login' %}" method="post" class="text-center">
         {% csrf_token %}
@@ -26,6 +20,4 @@
         <button type="submit">Log in</button>
     </form>
     <a href="{% url 'webapp:index' %}">To main page</a>
-</div>
-</body>
-</html>
+{% endblock %}
