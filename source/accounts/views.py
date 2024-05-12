@@ -12,7 +12,8 @@ class MyLoginView(LoginView):
         login_url = "/accounts/login/"
         if next_page:
             if reg_url in next_page or login_url in next_page:
-                return HttpResponseRedirect('/accounts/login/')
+                page_parts = next_page.split('?')
+                return HttpResponseRedirect(f'/accounts/login/?{page_parts[-1]}')
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -27,7 +28,8 @@ class RegisterView(CreateView):
         login_url = "/accounts/login/"
         if next_page:
             if login_url in next_page or reg_url in next_page:
-                return HttpResponseRedirect('/accounts/registration/')
+                page_parts = next_page.split('?')
+                return HttpResponseRedirect(f'/accounts/registration/?{page_parts[-1]}')
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
