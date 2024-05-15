@@ -45,5 +45,12 @@ class ProjectForm(forms.ModelForm):
         }
 
 
+class UsersInProjectForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('users', )
+
+
 class SimpleSearchForm(forms.Form):
     search = forms.CharField(max_length=100, required=False, label='Find')

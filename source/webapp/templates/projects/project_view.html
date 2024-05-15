@@ -23,6 +23,7 @@
                 {{ user.username }} {% if forloop.last %}.{% else %},{% endif %}
                 {% endfor %}
             </p>
+            <a class="nav-link" href="{% url 'webapp:update_users' pk=project.pk %}">Update users</a>
             {% for task in tasks %}
             <ul class="list-group">
                 {% include 'partial/task_item.html' %}

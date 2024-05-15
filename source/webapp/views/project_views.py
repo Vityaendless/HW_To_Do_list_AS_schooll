@@ -2,11 +2,11 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.db.models import Q
 from django.utils.http import urlencode
 from django.shortcuts import redirect, get_object_or_404
-from django.http import HttpResponseNotFound
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import User
 
 from ..models import Project
-from ..forms import SimpleSearchForm, ProjectForm
+from ..forms import SimpleSearchForm, ProjectForm, UsersInProjectForm
 
 
 class ProjectsView(ListView):
@@ -59,11 +59,18 @@ class ProjectView(DetailView):
         return context
 
 
-class ProjectCreateView(PermissionRequiredMixin, CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = 'projects/new_project.html'
     model = Project
     form_class = ProjectForm
-    permission_required = 'webapp.add_project'
+
+    def form_valid(self, form):
+        project = form.save(commit=False)
+        print(self.request.user)
+        project.save()
+        project.users.set((self.request.user, ))
+        form.save_m2m()
+        return redirect('webapp:project', pk=project.pk)
 
 
 class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
@@ -83,3 +90,9 @@ class ProjectDeleteView(PermissionRequiredMixin, DeleteView):
         project.is_deleted = True
         project.save()
         return redirect('webapp:index')
+
+
+class UsersInProjectUpdateView(UpdateView):
+    template_name = 'projects/update_users_in_project.html'
+    model = Project
+    form_class = UsersInProjectForm

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Update users in project{% endblock %}
+{% block content %}
+    <h1>Update users in project</h1>
+    {% if not project.is_deleted %}
+        {% include 'partial/form.html' with value_submit='Update users in project' form_method='post' %}
+    {% else %}
+        <h1>Page not found</h1>
+    {% endif %}
+{% endblock %}

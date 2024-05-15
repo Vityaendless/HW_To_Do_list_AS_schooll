@@ -51,7 +51,7 @@ class Project(AbstractModel):
     is_deleted = models.BooleanField(default=False, verbose_name='Deleted?')
 
     def __str__(self):
-        return f"Task {self.title}"
+        return f"Project {self.title}"
 
     def get_absolute_url(self):
         return reverse('webapp:project', kwargs={'pk': self.pk})
