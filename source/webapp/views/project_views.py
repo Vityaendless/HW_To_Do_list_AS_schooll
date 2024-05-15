@@ -2,9 +2,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.db.models import Q
 from django.utils.http import urlencode
 from django.shortcuts import redirect, get_object_or_404
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import User
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import Group
 from ..models import Project
 from ..forms import SimpleSearchForm, ProjectForm, UsersInProjectForm
 
@@ -59,14 +58,14 @@ class ProjectView(DetailView):
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'projects/new_project.html'
     model = Project
     form_class = ProjectForm
+    permission_required = 'webapp.add_project'
 
     def form_valid(self, form):
         project = form.save(commit=False)
-        print(self.request.user)
         project.save()
         project.users.set((self.request.user, ))
         form.save_m2m()
@@ -92,7 +91,14 @@ class ProjectDeleteView(PermissionRequiredMixin, DeleteView):
         return redirect('webapp:index')
 
 
-class UsersInProjectUpdateView(UpdateView):
+class UsersInProjectUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'projects/update_users_in_project.html'
     model = Project
     form_class = UsersInProjectForm
+    permission_required = 'webapp.change_project'
+
+    def has_permission(self):
+        developer = Group.objects.get_or_create(name='Developer')
+        print(developer)
+        no_access = len(self.request.user.groups.all()) == 1 and self.request.user.groups.first() == developer[0]
+        return self.request.user in self.get_object().users.all() and not no_access

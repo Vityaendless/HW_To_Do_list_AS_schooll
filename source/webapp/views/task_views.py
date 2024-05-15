@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import Group
 from ..models import Task, Project
 from ..forms import TaskForm
 
@@ -10,10 +11,14 @@ class TaskView(DetailView):
     template_name = 'tasks/task_view.html'
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'tasks/new_task.html'
     model = Task
     form_class = TaskForm
+    permission_required = 'webapp.add_task'
+
+    def has_permission(self):
+        return super().has_permission() or self.request.user in self.get_object().project.users.all()
 
     def form_valid(self, form):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
@@ -24,15 +29,29 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         return redirect('webapp:project', pk=project.pk)
 
 
-class TaskUpdateView(LoginRequiredMixin, UpdateView):
+class TaskUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'tasks/update_task.html'
     model = Task
     form_class = TaskForm
+    permission_required = 'webapp.change_task'
+
+    def has_permission(self):
+        return super().has_permission() or self.request.user in self.get_object().project.users.all()
 
 
-class TaskDeleteView(LoginRequiredMixin, DeleteView):
+class TaskDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'tasks/delete_task.html'
     model = Task
+    permission_required = 'webapp.delete_task'
+
+    def has_permission(self):
+        developer = Group.objects.get_or_create(name='Developer')
+        print(developer)
+        no_access = len(self.request.user.groups.all()) == 1 and self.request.user.groups.first() == developer[0]
+        return (
+                super().has_permission() or
+                (self.request.user in self.get_object().project.users.all() and not no_access)
+        )
 
     def post(self, request, *args, **kwargs):
         task = get_object_or_404(Task, pk=kwargs.get('pk'))

@@ -1,5 +1,9 @@
-{% if request.user.is_authenticated %}
+{% if perms.webapp.add_task or request.user in project.users.all %}
     <a class="nav-link" href="{% url 'webapp:new_task' pk=project.pk %}">New task</a>
+{% endif %}
+{% if perms.webapp.change_project %}
     <a class="nav-link" href="{% url 'webapp:update_project' pk=project.pk %}">Update project</a>
+{% endif %}
+{% if perms.webapp.delete_project %}
     <a class="nav-link bg-danger" href="{% url 'webapp:delete_project' pk=project.pk %}">Delete project</a>
 {% endif %}
