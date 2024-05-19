@@ -46,9 +46,14 @@ class Project(AbstractModel):
     start_date = models.DateField(verbose_name="Start Date")
     end_date = models.DateField(verbose_name="End Date", null=True, blank=True)
     title = models.CharField(max_length=50, validators=[MinLengthValidator(5)], verbose_name="Title")
-    users = models.ManyToManyField('auth.User', related_name='users', verbose_name='Users')
+    users = models.ManyToManyField('auth.User', related_name='users', verbose_name='Users') #или get_user_model()
     description = models.TextField(max_length=3000, null=True, blank=True, verbose_name="Description")
     is_deleted = models.BooleanField(default=False, verbose_name='Deleted?')
+
+    class Meta:
+        permissions = [
+            ('update_users_in_project', 'Can update users in project')
+        ]
 
     def __str__(self):
         return f"Project {self.title}"

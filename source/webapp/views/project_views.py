@@ -95,10 +95,8 @@ class UsersInProjectUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'projects/update_users_in_project.html'
     model = Project
     form_class = UsersInProjectForm
-    permission_required = 'webapp.change_project'
+    permission_required = 'webapp.update_users_in_project'
 
     def has_permission(self):
-        developer = Group.objects.get_or_create(name='Developer')
-        print(developer)
-        no_access = len(self.request.user.groups.all()) == 1 and self.request.user.groups.first() == developer[0]
-        return self.request.user in self.get_object().users.all() and not no_access
+        return super().has_permission() and self.request.user in self.get_object().users.all()
+    

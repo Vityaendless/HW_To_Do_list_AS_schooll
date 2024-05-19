@@ -21,9 +21,11 @@
             <p class="card-text">End date: {{ project.end_date }}</p>
             <p class="bg-primary">Users:{% for user in project.users.all %}
                 {{ user.username }} {% if forloop.last %}.{% else %},{% endif %}
+                {% empty %}
+                    No users
                 {% endfor %}
             </p>
-            {% if request.user in project.users.all %}
+            {% if perms.webapp.update_users_in_project and request.user in project.users.all %}
                 <a class="nav-link" href="{% url 'webapp:update_users' pk=project.pk %}">Update users</a>
             {% endif %}
             {% for task in tasks %}

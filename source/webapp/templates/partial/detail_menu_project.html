@@ -1,4 +1,4 @@
-{% if perms.webapp.add_task or request.user in project.users.all %}
+{% if perms.webapp.add_task and request.user in project.users.all %}
     <a class="nav-link" href="{% url 'webapp:new_task' pk=project.pk %}">New task</a>
 {% endif %}
 {% if perms.webapp.change_project %}

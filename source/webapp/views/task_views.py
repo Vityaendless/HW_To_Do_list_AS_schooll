@@ -18,7 +18,7 @@ class TaskCreateView(PermissionRequiredMixin, CreateView):
     permission_required = 'webapp.add_task'
 
     def has_permission(self):
-        return super().has_permission() or self.request.user in self.get_object().project.users.all()
+        return super().has_permission() and self.request.user in self.get_object().project.users.all()
 
     def form_valid(self, form):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
@@ -36,7 +36,7 @@ class TaskUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'webapp.change_task'
 
     def has_permission(self):
-        return super().has_permission() or self.request.user in self.get_object().project.users.all()
+        return super().has_permission() and self.request.user in self.get_object().project.users.all()
 
 
 class TaskDeleteView(PermissionRequiredMixin, DeleteView):
@@ -45,13 +45,7 @@ class TaskDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'webapp.delete_task'
 
     def has_permission(self):
-        developer = Group.objects.get_or_create(name='Developer')
-        print(developer)
-        no_access = len(self.request.user.groups.all()) == 1 and self.request.user.groups.first() == developer[0]
-        return (
-                super().has_permission() or
-                (self.request.user in self.get_object().project.users.all() and not no_access)
-        )
+        return super().has_permission() and self.request.user in self.get_object().project.users.all()
 
     def post(self, request, *args, **kwargs):
         task = get_object_or_404(Task, pk=kwargs.get('pk'))

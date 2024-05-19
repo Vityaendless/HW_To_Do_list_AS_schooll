@@ -2,9 +2,9 @@
     <a class="nav-link active" aria-current="page" href="{% url 'accounts:registration' %}?next={{ request.get_full_path }}">Registration</a>
     <a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Log in</a>
 {% else %}
-    <form id="logout-form" method="post" action="{% url 'accounts:logout' %}">
+    <form id="logout-form" method="post" action="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">
         {% csrf_token %}
-        <button type="submit">Log out</button>
+        <input class="btn btn-link text-success-emphasis text-decoration-none" value="Exit" type="submit">
     </form>
 {% endif %}
 <a class="nav-link" aria-current="page" href="{% url 'webapp:index' %}">Projects list</a>
